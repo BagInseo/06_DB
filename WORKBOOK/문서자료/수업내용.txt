@@ -1,0 +1,32 @@
+
+
+권한 명령어
+grant = 권한
+connect =  사용자가 데이터베이스에 접속할 수 있는 권한 , 
+resource = 데이터베이스에 생성하고 사용할 수 있는 권한, 
+dba = dbadmin 슈퍼권한
+to 아이디;
+
+
+create = 생성 
+user = 생성하고자 하는 목표
+아이디명
+identified by 비밀번호
+
+alter : 수정
+session
+set = 수정하고자 하는 부분 
+"_oracle_script" = true;
+
+sqlplus : 접속을 의미
+sys/oracle : oracle 사용자 = 관리자 
+as
+sysdba = 데이터베이스 생성과 삭제 권한
+
+[cmd]
+ctrl + c = 명령어에서 하고 있는 작업을 ㄹ중단할 수 있는 권한,
+exit : 현재 aql에서 컴퓨터로 돌아가고 싶을 때 사용하는 명령어
+
+sqlplus 관리자 권한으로 접속해서
+khk 라는 계정 생성
+비빌번호 1234
