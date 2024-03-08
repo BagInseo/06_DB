@@ -30,3 +30,12 @@ exit : 현재 aql에서 컴퓨터로 돌아가고 싶을 때 사용하는 명령
 sqlplus 관리자 권한으로 접속해서
 khk 라는 계정 생성
 비빌번호 1234
+
+
+
+
+
+Create insert
+Read	select
+Update	update
+Delete	deldte

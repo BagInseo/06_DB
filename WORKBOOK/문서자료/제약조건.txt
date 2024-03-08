@@ -1,0 +1,85 @@
+DB(DataBase) : 데이터가 모이는 곳
+
+DBMS(DataBase Management System) 
+ : DB 조작, 추출, 정의, 제어 관리 시스템
+ 
+SQL(Structured Query Language) : 구조적 질의 언어
+ DB의 데이터를 조작, 추출, 정의, 제어 하는데 사용되는
+ 데이터 처리 언어
+ 
+DQL(Data Query Language) : 데이터 질의 언어
+ -> SELECT
+ 
+DML(Data Manipulation Language) : 데이터 조작 언어
+ -> INSERT, UPDATE, DELETE
+ 
+TCL(Transaction Control Language) : 트랜젝션 제어 언어
+ -> COMMIT, ROLLBACK
+ 
+DDL(Data Definition Language) : 데이터 정의 언어
+ -> CREATE, ALTER, DROP
+ 
+DCL(Data Control Language) : 데이터 제어 언어 (권한)
+-> GRANT, REVOKE
+
+[SELECT문 작성법]
+
+5 SELECT
+1 FROM (+JOIN)
+2 WHERE 
+3 GROUP BY
+4 HAVING
+6 ORDER BY
+
+[JOIN]
+
+- [INNER] JOIN : 같은 컬럼 값을 가진 행들끼리 연결
+- LEFT  [OUTER] JOIN : 왼쪽   테이블의 모든 행이 결과에 포함
+- RIGHT [OUTER] JOIN : 오른쪽 테이블의 모든 행이 결과에 포함
+
+
+[INSERT문 작성법]
+1) INSERT INTO 테이블명 VALUES(값....);
+2) INSERT INTO 테이블명 (컬럼명...) VALUES(값....);
+3) INSERT INTO 테이블명 (서브쿼리);
+
+[UPDATE문 작성법]
+
+UPDATE 테이블
+SET 컬럼명 = 변경값,
+    컬럼명 = 변경값
+WHERE 조건;
+
+[DELETE문 작성법]
+
+DELETE FROM 테이블명
+WHERE 조건;
+
+
+[DB 자료형]
+
+- NUMBER   : 숫자
+- DATE     : 날짜
+- CHAR     : 고정 길이 문자형(2000 BYTE)
+- VARCHAR2 : 가변 길이 문자형(4000 BYTE)
+
+
+[제약 조건]
+- NOT NULL  (컬럼 레벨로만 설정 가능!)
+- UNIQUE
+- PRIMARY KEY (식별자 역할)
+- FOREIGN KEY
+- CHECK
+
+[테이블 생성 시 제약조건 설정 방법]
+
+- 제약조건만 작성 -> 자동으로 제약조건명이 설정(SYS_C23123123)
+
+- CONSTRAINT 제약조건명 제약조건 
+ -> 지정된 제약조건명으로 제약조건 생성
+ 
+ 
+[FOREIGN KEY]
+- 부모 테이블의 컬럼 값을 참조해서 
+  자식 테이블 컬럼에 작성
+  (부모의 값 + NULL 만 자식 테이블에 작성 가능!)
