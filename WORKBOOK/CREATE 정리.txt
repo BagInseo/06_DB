@@ -1,0 +1,110 @@
+[CREATE TABLE 작성법]
+CREATE TABLE 테이블명 (
+	컬럼명 자료형 (크기),
+	컬럼명 자료형 (크기),
+	컬럼명 자료형 (크기)
+	);
+
+EX) 
+CREATE TABLE MEMBER(
+	MEMBER_ID VARCHAR(20),  
+	//20BYTE의 크기를 가진 가변길이의 문자열을 저장하는 자료형
+
+	ENROLL_DATE DATE DEFAULT SYSDATE
+	//현재 날짜를 기본 값으로 설정한 날짜를 나타내는 DATE 자료형
+
+	);
+
+자료형
+NUMBER : 숫자(정수, 실수)
+CHAR(크기) : 고정길이 문자열(2000BYTE) 
+VARCHAR2(크기) : 가변길이 문자열(4000BYTE)
+DATE : 날짜 타입
+BLOB : 대용량 이진 데이터
+CLOB : 대용량 문자 데이터
+
+**기본값 (DEFAULT) : 컬럼의 기본 값 지정
+==> INSERT , UPDATE 시 해당 컬럼의 값을 넣지 않으면 기본 값이 들어간다. 
+==> 필수는 아님
+
+TABLE을 생성한 후 컬럼의 주석을 달기
+[작성법]
+COMMENT ON COLUMN 테이블명.컬럼명 IS '주석내용' ;
+
+EX) TABLE(MEMBER), COLUMN(MEMBER_ID), 주석내용(회원 아이디)
+    => COMMENT ON COLUMN MEMBER.MEMBER_ID IS '회원 아이디';
+
+만든 테이블에 데이터 INSERT하기
+[작성법]
+INSERT INTO 테이블명 VALUES ('')
+=> INSERT INTO MEMBER VALUES('MEM01'); //날짜 데이터는 기본값인 SYSDATE로 들어감
+==> DEFAULT를 사용한 컬럼 사용법 (DEFAULT, 미작성, 값 작성) 
+
+DML의 수행 내용을 DB에 반영하기 ==> COMMIT
+
+
+
+제약 조건 
+제약 조건의 종류
+-PRIMARY KEY : 테이블에서 한 행의 정보를 찾기 위해 사용할 컬럼
+	         (테이블에 대한 식별자 역할==>INDENTIFIER)
+	         - NOT NULL + UNIQUE
+	         - 한 테이블 당 한 개만 설정 가능
+	         - 컬럼, 테이블 레벨 둘 다 설정 가능
+
+		CREATE TABLE MEMBER (
+		MEMBER_NO NUMBER CONSTRAINT M_NO PRIMARY KEY, //컬럼 레벨 제약 조건 설정
+		MEMBER_ID VARCHAR(20)
+		ENROLL_DATE DATE SYSDATE,
+		
+		CONSTRAINT 제약조건명 UNIQUE (MEMBER_ID),
+		//CONSTRAINT M_NO PRIMARY KEY(MEMBER_NO)
+
+		[PRIMARY KEY 복합키 설정]
+		[CONSTRAINT M_NO_ID PRIMARY KEY (MEMBER_NO,MEMBER_ID)] ==>테이블 레벨로만 가능함
+		
+		//테이블 레벨	
+		);
+
+-NOT NULL : 해당 컬럼에 반드시 값이 기록되어야 함 (컬럼레벨에서만 설정 가능!!)
+	CREATE TABLE MEMBER (
+		MEMBER_NO NUMBER NOT NULL, (컬럼 레벨 제약 조건 설정)
+		MEMBER_ID VARCHAR(20),
+		ENROLL_DATE DATE DEFAULT SYSDATE
+		);
+==> MEMBER_NO의 값을 삽입하지 않거나, NULL을 삽입하면 제약 조건을 
+       위배하여 오류가 발생한다. 
+
+
+
+-UNIQUE : 컬럼에 입력 값에 대하여 중복을 제한하는 제약조건 (컬럼 레벨, 테이블 레벨 모두 설정 가능)
+              * 단, NULL값은 중복 삽입 가능하다. 
+	CREATE TABLE MEMBER (
+		MEMBER_NO NUMBER NOT NULL,
+		MEMBER_ID VARCHAR(20) UNIQUE, ==> 컬럼 레벨 제약 조건 설정 
+		==> 제약 조건명 없음
+		==> 제약조건명 설정을 위해서는
+		==>MEMBER_ID VARCHAR(20) CONSTRAINT (제약조건명) UNIQUE,
+		ENROLL_DATE DATE SYSDATE,
+		
+		//CONSTRAINT 제약조건명 UNIQUE (MEMBER_ID)
+		//테이블 레벨	
+		);
+
+	*UNIQUE 의 복합키 
+	CREATE TABLE MEMBER (
+		MEMBER_NO NUMBER NOT NULL,
+		MEMBER_ID VARCHAR(20), 
+		MEMBER_NAME VAERCHAR(15),
+		ENROLL_DATE DATE SYSDATE,
+		
+		CONSTRAINT USER_ID_NAME UNIQUE (MEMBER_ID, MEMBER_NAME)
+		);
+
+-CHECK
+-FOREIGN KEY : 참조(REFERENCES)된 다른 테이블의 컬럼이 제공하는 값만 사용할 수 있음
+		-제공되는 값 외에는 NULL값을 사용할 수 있다. 
+		-참조될 수 있는 컬럼은 PRIMARY KEY와 UNIQUE 로 지정된 컬럼만 외래키로 사용할 수 있다.
+		[작성법 - 컬럼 레벨]
+		컬럼명 자료형(크기) CONSTRAINT 제약조건명 REFERENCES 참조할 테이블명 (참조할 컬럼) 
+		MEMBER_GRADE NUMBER CONSTRAINT GRADE_FK1 REFERENCES USER_GRADE (GRADE_CODE)
