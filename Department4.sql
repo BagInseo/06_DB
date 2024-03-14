@@ -1,0 +1,85 @@
+SELECT EMP_ID, EMP_NAME, DEPT_CODE, JOB_CODE,SALARY,HIRE_DATE
+FROM EMPLOYEE ;
+
+--급여를 300만 보다 많이 받는 사원의 사번,이름, 급여, 직급명 조회
+SELECT EMP_ID ,EMP_NAME ,SALARY ,JOB_NAME
+FROM EMPLOYEE 
+JOIN JOB USING (JOB_CODE)
+WHERE SALARY >= 3000000
+ORDER BY SALARY DESC ;
+
+
+-- 입력 받은 최소 급여 보다 많이 받고(이상)
+-- 입력 받은 최고 급여보단 적게 받는(이하)
+-- 사원의  사번, 이름, 급여를 급여 내림차순 조회
+SELECT EMP_ID, EMP_NAME,SALARY
+FROM EMPLOYEE 
+WHERE SALARY BETWEEN 2000000 AND  3000000 ;
+
+
+
+		
+--		// 부서명을 입력 받아
+--		// 해당 부서에 근무하는 모든 사원의
+--		// 사번, 이름, 부서명, 직급명을 
+--		// 직급코드 오름차순으로 조회
+SELECT EMP_ID, EMP_NAME, DEPT_TITLE ,JOB_NAME
+FROM EMPLOYEE 
+LEFT JOIN DEPARTMENT ON (DEPT_CODE = DEPT_ID)
+NATURAL JOIN JOB
+WHERE DEPT_TITLE ='총무부'
+ORDER BY JOB_CODE;
+
+
+CREATE TABLE DEPARTMENT4
+AS SELECT * FROM DEPARTMENT;
+
+SELECT * FROM DEPARTMENT4;
+
+--DEPARTMENT4 테이블에
+--'D0','기획개발팀','L2'삽입
+INSERT INTO DEPARTMENT4 VALUES ('D0','기획개발팀','L2');
+--> 실행 결과로 삽입된 행의 개수 반환!!!
+
+--사용자(개발자)가 직접 트랜잭셩 제어 처리
+COMMIT;
+ROLLBACK;
+
+--부서 검색
+SELECT *
+FROM DEPARTMENT4 
+WHERE DEPT_TITLE LIKE '%영%';
+
+--부서 삭제
+DELETE FROM DEPARTMENT4
+WHERE DEPT_ID = 'D0';
+
+--부서명 수정
+UPDATE DEPARTMENT4 
+SET DEPT_TITLE = '회계팀'
+WHERE DEPT_ID ='A5';
+
+
+
+SELECT * FROM DEPARTMENT4 
+WHERE DEPT_ID = 'D9';
+
+
+--DEPARTMENT4  테이블 조회
+---> 복사한 테이블 NOT NULL을 제외한
+--  제약조건이 복사 안됨!! 
+--> PK 제약조건이 없는 상태
+SELECT * FROM DEPARTMENT4;
+
+DELETE FROM DEPARTMENT4
+WHERE DEPT_ID = 'A2';
+
+COMMIT;
+
+--DEPARTMENT4 테이블에 PK 제약조건 추가
+ALTER TABLE DEPARTMENT4 
+ADD CONSTRAINT DEPT4_PK
+PRIMARY KEY(DEPT_ID);
+
+
+
